@@ -1,3 +1,9 @@
+# 创建uv环境
+-python -m venv venv	创建venv;或者直接uv sync创建
+-.\venv\Scripts\Activate.ps1	激活环境
+
+## 1.环境搭建
+
 ## 通过docker安装相关中断件并启动服务
 
 - 启动window版本docker（docker desktop）
