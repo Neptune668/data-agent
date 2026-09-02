@@ -92,6 +92,7 @@ _yaml_path = Path(__file__).parents[2] / 'conf/app_config.yaml'
 _yaml_data = OmegaConf.load(_yaml_path)
 
 # 将OmegaConf对象转成AppConfig对象
+# app_config: AppConfig = OmegaConf.to_object(_yaml_data)   # 不可以，生成的是字典
 app_config: AppConfig = OmegaConf.to_object(OmegaConf.merge(AppConfig, _yaml_data))
 
 if __name__ == '__main__':
