@@ -1,0 +1,4 @@
+2026-09-04 19:55:13 | INFO     | request_id - d93e7bcd-c51a-451d-9f7b-4611fc14b70c | __main__:<module>:69 - 普通信息
+2026-09-04 19:55:13 | WARNING  | request_id - 718603f7-f960-45ad-a249-3ea7d2eb2883 | __main__:<module>:70 - 警告信息
+2026-09-04 19:55:13 | ERROR    | request_id - d0ece706-144a-499a-8ee8-cd9478b4a628 | __main__:<module>:71 - 错误信息
+2026-09-04 19:55:13 | CRITICAL | request_id - 16c10866-3f3c-44df-bd25-171db538658f | __main__:<module>:72 - 严重错误
