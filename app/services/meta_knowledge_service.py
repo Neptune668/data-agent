@@ -133,7 +133,7 @@ class MetaKnowledgeService:
 
         # 收集所有点point的信息的字典列表
         # [{id:uuid,vector:'向量文本',payload:{}},{...}]
-        
+        pass
 
 
     async def _save_column_value_to_es(self, column_infos: list[ColumnInfoMySQL], tables: list[TableConfig]):
