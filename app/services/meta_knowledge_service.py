@@ -120,10 +120,21 @@ class MetaKnowledgeService:
         return column_infos
 
     async def _save_column_info_to_meta(self, column_infos: list[ColumnInfoMySQL]):
-        pass
+        # 调用持久层的方法保存到column_info表中
+        self.meta_mysql_repo.save_column_infos(column_infos)
+
 
     async def _save_column_info_to_qdrant(self, column_infos: list[ColumnInfoMySQL]):
-        pass
+        # 遍历column_infos，对每一个column_info中的 name description 和 alias的每一个值进行向量化
+        # point 包含（id,vector,payload）
+        # id -> uuid生成
+        # vector -> embedding模型向量化
+        # payload -> 包含column_info中的所有信息的字典(ColumnInfoQdrant类型)
+
+        # 收集所有点point的信息的字典列表
+        # [{id:uuid,vector:'向量文本',payload:{}},{...}]
+        
+
 
     async def _save_column_value_to_es(self, column_infos: list[ColumnInfoMySQL], tables: list[TableConfig]):
         pass

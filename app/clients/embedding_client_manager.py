@@ -17,6 +17,7 @@ class EmbeddingClientManager:
 
     # embedding客户端不需要关闭
 
+
 # 创建embedding客户端管理器
 embedding_client_manager = EmbeddingClientManager(app_config.embedding)
 
@@ -29,6 +30,7 @@ if __name__ == '__main__':
 
     # 对指定文本进行向量化
     text = "你好，世界！"
-    vector = client.embed_query(text)
+    vector = client.embed_query(text)  # 一次向量化一个文本
+    # vector = client.embed_documents([text]) # 一次向量化多个文本
     # print(vector) # [...]
-    print(len(vector)) # 1024维度
+    print(len(vector))  # 1024维度

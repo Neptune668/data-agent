@@ -24,7 +24,7 @@ async def start_build():
     meta_mysql_client_manager.init()
     embedding_client_manager.init()
 
-    # 构建元数据知识库，成功提交事务，失败回滚事务
+    # 构建元数据知识库，成功,提交事务，失败,回滚事务
     try:
         # 调用meta_knowledge_service.py中的build()方法构建业务
         async with (dw_mysql_client_manager.session_factory() as dw_session,
@@ -34,7 +34,7 @@ async def start_build():
                 dw_mysql_repo=DWMySQLRepository(dw_session),
                 meta_mysql_repo=MetaMySQLRepository(meta_session),
                 column_qdrant_repo=ColumnQdrantRepository(qdrant_client_manager.client),
-                Metric_qdrant_repo=MetricQdrantRepository(qdrant_client_manager.client),
+                metric_qdrant_repo=MetricQdrantRepository(qdrant_client_manager.client),
                 embedding_client= embedding_client_manager.client
             )
             # 构建业务

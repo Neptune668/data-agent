@@ -1,6 +1,6 @@
 import asyncio
 
-from sqlalchemy import text, Select, Result
+from sqlalchemy import text, Select
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine, AsyncSession, async_sessionmaker
 
 from app.conf.app_config import DBConfig, app_config
@@ -27,11 +27,12 @@ class MysqlClientManager:
             pool_size=10,  # 初始创建的常驻连接池的连接数量
             pool_pre_ping=True  # 每次连接使用前进行一次ping操作，确认连接是否可用
         )
+
         # 创建异步会话的工厂
         self.session_factory = async_sessionmaker(
             self.engine,
             autoflush=True,  # 自动刷新数据，自动将未提交事务的修改数据同步到数据库暂存区，可以查询到最新的数据
-            autobegin=True,  # 自动开始事务，每次执行sql语句前自动开始事务，并不会自动关闭事务
+            autobegin=True,  # 自动开始事务，每次执行sql语句z前自动开始事务，并不会自动关闭事务
             expire_on_commit=False  # 提交事务后ORM对象不过期，还可以访问里面的数据
         )
 
@@ -41,25 +42,11 @@ class MysqlClientManager:
 
 
 # 创建操作数据库的客户端
-# dw_mysql_client_manager = MysqlClientManager(app_config.db_dw)
-dw_mysql_client_manager = MysqlClientManager(app_config.db_dw)
+dw_mysql_client_manager = MysqlClientManager(config=app_config.db_dw)
 meta_mysql_client_manager = MysqlClientManager(config=app_config.db_meta)
 
 # 测试
 if __name__ == '__main__':
-    async def test1_1():
-        dw_mysql_client_manager.init()
-        session = AsyncSession(dw_mysql_client_manager.engine)
-        result = await session.execute(text("select * from dim_customer limit 2"))
-        # rows = result.scalar()
-        # print(rows)
-        first_row = result.first()  # 获取第一行
-        print(first_row)  # 查看整行内容
-        await session.close()
-        await dw_mysql_client_manager.close()
-
-
-    # AsyncSession(engine)方式创建
     async def test1():
         # 初始化客户端
         dw_mysql_client_manager.init()
@@ -91,26 +78,15 @@ if __name__ == '__main__':
         await dw_mysql_client_manager.close()
 
 
-    async def test2_1():
-        dw_mysql_client_manager.init()
-        async with dw_mysql_client_manager.session_factory() as session:
-            result: Result = await session.execute(text("select * from dim_customer limit 2"))
-            rows = result.all()
-            # print(rows)
-            # print(result.scalars().all())
-            # print(result.scalar())
-            # print(result.mappings().all())#字典列表
-            print(rows)
-        await dw_mysql_client_manager.close()
+    # asyncio.run(test1())
 
-
-    # 会话工厂创建
     async def test2():
         # 初始化客户端
         dw_mysql_client_manager.init()
 
         async with dw_mysql_client_manager.session_factory() as session:
             result = await session.execute(text("select * from dim_customer limit 2"))
+
             # 获取查询结果
             # rows = result.all() # 得到row列表
             # print(rows) # [('C001', '李伟', '男', '黄金'), ('C002', '王芳', '女', '白银')]
@@ -128,62 +104,11 @@ if __name__ == '__main__':
         await dw_mysql_client_manager.close()
 
 
-    async def test3_1():
-        meta_mysql_client_manager.init()
-        async with meta_mysql_client_manager.session_factory() as session:
-            #添加数据
-            # table_info1 = TableInfoMySQL(
-            #     id='3',
-            #     name='test_table3',
-            #     role='fact',
-            #     description="test3"
-            # )
-            # table_info2 = TableInfoMySQL(
-            #     id='4',
-            #     name='test_table4',
-            #     role='fact',
-            #     description="test4"
-            # )
-            table_info5 = TableInfoMySQL(
-                id='5',
-                name='test_table5',
-                role='fact',
-                description="test5"
-            )
-            # #添加数据
-            # session.add(table_info1)
-            # session.add(table_info5)
-            # await session.commit()
-            # result2:TableInfoMySQL = await session.get(TableInfoMySQL, "5")
-            # print(result2.name)
-            #
-            # result = await session.execute(text("select * from table_info"))
-            # print(result.all())
+    # asyncio.run(test2())
 
-            #查询多条数据
-            # result = await session.execute(Select(TableInfoMySQL))
-            # # objects = result.scalars().all()  # list[TableInfoMySQL]
-            # # for obj in objects:
-            # #     print(f"id={obj.id}, name={obj.name}, role={obj.role}, description={obj.description}")
-            # rows = result.mappings().all()  # list[dict]
-            # for row in rows:
-            #     print(row)  # 直接看到 {id:..., name:..., ...}
-
-            #查询并删除
-            # table_info4 = await session.get(TableInfoMySQL, '4')
-            # print(table_info4)
-            # await session.delete(table_info4)
-            # await session.commit()
-
-            #修改数据
-            t1 = await session.get(TableInfoMySQL, '1')
-            t1.name = 'zzz'
-            await session.commit()
-
-        await meta_mysql_client_manager.close()
-
-    # 使用ORM操作数据库
     async def test3():
+        # 使用ORM操作数据库
+
         # 初始化客户端
         meta_mysql_client_manager.init()
 
@@ -240,7 +165,5 @@ if __name__ == '__main__':
         # 关闭客户端，释放资源
         await meta_mysql_client_manager.close()
 
-    # asyncio.run(test2())
-    # asyncio.run(test1())
-    # asyncio.run(test1_1())
-    asyncio.run(test3_1())
+
+    asyncio.run(test3())

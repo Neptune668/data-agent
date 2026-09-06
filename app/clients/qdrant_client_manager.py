@@ -24,8 +24,9 @@ class QdrantClientManager:
     async def close(self):
         await self.client.close()
 
+
 # 创建qdrant客户端管理实例
-qdrant_client_manager: QdrantClientManager = QdrantClientManager(app_config.qdrant)
+qdrant_client_manager = QdrantClientManager(app_config.qdrant)
 
 # 测试
 if __name__ == '__main__':
@@ -43,8 +44,8 @@ if __name__ == '__main__':
         await client.create_collection(
             collection_name="test_collection",
             vectors_config=models.VectorParams(
-                size=4, # 向量维度
-                distance=models.Distance.COSINE # 向量距离的算法
+                size=4,  # 向量维度
+                distance=models.Distance.COSINE  # 向量距离的算法
             )
         )
 
@@ -64,9 +65,9 @@ if __name__ == '__main__':
             collection_name="test_collection",
             points=[
                 models.PointStruct(
-                    id=1, # 数据id
-                    vector=[1.0, 0.2, 0.3, 0.4], # 向量数据
-                    payload={"name": "test1"} # 向量的相关数据
+                    id=1,  # 数据id
+                    vector=[1.0, 0.2, 0.3, 0.4],  # 向量数据
+                    payload={"name": "test1"}  # 向量的相关数据
                 ),
                 models.PointStruct(
                     id=2,  # 数据id
@@ -101,14 +102,15 @@ if __name__ == '__main__':
         # 查询数据
         result = await client.query_points(
             collection_name="test_collection",
-            query=[1.0, 0.2, 0.3, 0.4], # 要查询的向量
-            limit=3, # 返回3个最相似的向量
-            score_threshold=0.6 # 相似度阈值，只返回高于阈值的向量
+            query=[1.0, 0.2, 0.3, 0.4],  # 要查询的向量
+            limit=3,  # 返回3个最相似的向量
+            score_threshold=0.6  # 相似度阈值，只返回高于阈值的向量
         )
         print(result)
-        print(result.points[0].payload) # {'name': 'test1'}
+        print(result.points[0].payload)  # {'name': 'test1'}
 
         # 关闭客户端
         await qdrant_client_manager.close()
+
 
     asyncio.run(test())
