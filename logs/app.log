@@ -2,3 +2,19 @@
 2026-09-04 19:55:13 | WARNING  | request_id - 718603f7-f960-45ad-a249-3ea7d2eb2883 | __main__:<module>:70 - 警告信息
 2026-09-04 19:55:13 | ERROR    | request_id - d0ece706-144a-499a-8ee8-cd9478b4a628 | __main__:<module>:71 - 错误信息
 2026-09-04 19:55:13 | CRITICAL | request_id - 16c10866-3f3c-44df-bd25-171db538658f | __main__:<module>:72 - 严重错误
+2026-09-06 20:58:31 | INFO     | request_id - effb6fd2-e2dd-4d06-83a8-9740e6e16a8f | __main__:start_build:18 - 构建元数据知识库 开始
+2026-09-06 20:58:32 | INFO     | request_id - 308973c5-3fa1-4a7c-81c7-dde61e60a0af | app.services.meta_knowledge_service:build:39 - 构建业务 开始
+2026-09-06 20:58:32 | INFO     | request_id - 310639ff-52bf-481b-9ec0-0baea0785701 | app.services.meta_knowledge_service:build:57 - 保存表信息到meta库
+2026-09-06 20:58:32 | INFO     | request_id - c2ba5453-fdec-44b7-8e23-ab12c462563e | app.services.meta_knowledge_service:build:61 - 保存字段信息到meta库
+2026-09-06 20:58:32 | ERROR    | request_id - 32dc2f6a-202b-4c5c-a2fa-6805adf8daea | __main__:start_build:49 - 构建元数据知识库 失败: Server disconnected
+2026-09-06 21:03:46 | INFO     | request_id - 02831ff1-6800-4040-ab38-056acde04a1b | __main__:start_build:18 - 构建元数据知识库 开始
+2026-09-06 21:03:46 | INFO     | request_id - e242ef1f-76ad-4c8a-b494-a09af920454c | app.services.meta_knowledge_service:build:39 - 构建业务 开始
+2026-09-06 21:03:46 | INFO     | request_id - a09be004-fd11-48be-8ee9-88efa405f8d1 | app.services.meta_knowledge_service:build:57 - 保存表信息到meta库
+2026-09-06 21:03:46 | INFO     | request_id - ed25882e-abd7-4c6a-bb22-4071d7af7a1b | app.services.meta_knowledge_service:build:61 - 保存字段信息到meta库
+2026-09-06 21:03:52 | INFO     | request_id - 5b313c84-85bb-4350-a7ea-1b87d46ba5d3 | app.services.meta_knowledge_service:build:65 - 为字段信息建立向量索引
+2026-09-06 21:03:52 | INFO     | request_id - 0992c3c0-b67e-4084-8bb7-ffdba74e1442 | app.services.meta_knowledge_service:build:69 - 为字段取值建立全文索引
+2026-09-06 21:03:52 | INFO     | request_id - 927ac67c-4b45-4bfe-9be3-133cefc5a408 | app.services.meta_knowledge_service:build:75 - 保存指标信息到meta库1
+2026-09-06 21:03:52 | INFO     | request_id - c2c5f8b1-c2af-4dfc-836e-f5f0d86bfef6 | app.services.meta_knowledge_service:build:79 - 保存指标信息到meta库2
+2026-09-06 21:03:53 | INFO     | request_id - 7545d4b8-831f-47e4-955e-04a1404dd8ad | app.services.meta_knowledge_service:build:83 - 为指标信息建立向量索引
+2026-09-06 21:03:53 | INFO     | request_id - dc46354d-8376-4b3f-b108-93f14d2f8f3f | app.services.meta_knowledge_service:build:85 - 构建业务 完成
+2026-09-06 21:03:53 | INFO     | request_id - b55f957c-8a79-475d-964d-6a99dd9bbcf3 | __main__:start_build:47 - 构建元数据知识库 完成
