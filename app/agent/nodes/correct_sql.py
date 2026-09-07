@@ -1,18 +1,13 @@
-"""校正 SQL 节点。"""
-
 from langgraph.runtime import Runtime
 
-from app.agent.context import Context
-from app.agent.state import State
-from app.core.log import logger
+from app.agent.context import DataAgentContext
+from app.agent.state import DataAgentState
 
 
-def correct_sql(state: State, runtime: Runtime[Context]) -> dict:
-    """校正校验未通过的 SQL。"""
-    logger.info('节点 correct_sql 执行')
+# 节点：校正SQL
+def correct_sql(state: DataAgentState, runtime: Runtime[DataAgentContext]):
+    # 输出给前端的数据（前后端约定好的格式）
     runtime.stream_writer({"stage": "校正SQL"})
 
-    # TODO: 使用 LLM 校正错误的 SQL
-    sql = state.get("sql", "")
-
-    return {"sql": sql}
+    # 更新状态数据
+    return {}

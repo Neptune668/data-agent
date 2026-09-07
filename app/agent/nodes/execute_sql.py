@@ -1,18 +1,13 @@
-"""执行 SQL 节点。"""
-
 from langgraph.runtime import Runtime
 
-from app.agent.context import Context
-from app.agent.state import State
-from app.core.log import logger
+from app.agent.context import DataAgentContext
+from app.agent.state import DataAgentState
 
 
-def execute_sql(state: State, runtime: Runtime[Context]) -> dict:
-    """执行 SQL 并返回结果。"""
-    logger.info('节点 execute_sql 执行')
+# 节点：执行SQL
+def execute_sql(state: DataAgentState, runtime: Runtime[DataAgentContext]):
+    # 输出给前端的数据（前后端约定好的格式）
     runtime.stream_writer({"stage": "执行SQL"})
 
-    # TODO: 使用 runtime.context['dw_mysql_repo'] 执行 SQL
-    sql_result: str = ""
-
-    return {"sql_result": sql_result}
+    # 更新状态数据
+    return {}

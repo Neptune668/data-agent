@@ -1,18 +1,13 @@
-"""过滤表格信息节点。"""
-
 from langgraph.runtime import Runtime
 
-from app.agent.context import Context
-from app.agent.state import State
-from app.core.log import logger
+from app.agent.context import DataAgentContext
+from app.agent.state import DataAgentState
 
 
-def filter_table(state: State, runtime: Runtime[Context]) -> dict:
-    """从召回结果中过滤出与查询相关的表信息。"""
-    logger.info('节点 filter_table 执行')
-    runtime.stream_writer({"stage": "过滤表格信息"})
+# 节点：过滤表信息
+def filter_table(state: DataAgentState, runtime: Runtime[DataAgentContext]):
+    # 输出给前端的数据（前后端约定好的格式）
+    runtime.stream_writer({"stage": "过滤表信息"})
 
-    # TODO: 使用 LLM 过滤不相关的表信息
-    filtered_tables: list = []
-
-    return {"filtered_tables": filtered_tables}
+    # 更新状态数据
+    return {}

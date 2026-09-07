@@ -1,18 +1,13 @@
-"""添加额外上下文信息节点。"""
-
 from langgraph.runtime import Runtime
 
-from app.agent.context import Context
-from app.agent.state import State
-from app.core.log import logger
+from app.agent.context import DataAgentContext
+from app.agent.state import DataAgentState
 
 
-def add_context(state: State, runtime: Runtime[Context]) -> dict:
-    """组装字段/指标/表等上下文，供 SQL 生成使用。"""
-    logger.info('节点 add_context 执行')
-    runtime.stream_writer({"stage": "添加上下文信息"})
+# 节点：添加额外信息
+def add_context(state: DataAgentState, runtime: Runtime[DataAgentContext]):
+    # 输出给前端的数据（前后端约定好的格式）
+    runtime.stream_writer({"stage": "添加额外信息"})
 
-    # TODO: 根据过滤后的表/指标信息组装上下文
-    context: str = ""
-
-    return {"context": context}
+    # 更新状态数据
+    return {}

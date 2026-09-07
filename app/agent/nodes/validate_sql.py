@@ -1,19 +1,15 @@
-"""校验 SQL 节点。"""
-
 from langgraph.runtime import Runtime
 
-from app.agent.context import Context
-from app.agent.state import State
-from app.core.log import logger
+from app.agent.context import DataAgentContext
+from app.agent.state import DataAgentState
 
 
-def validate_sql(state: State, runtime: Runtime[Context]) -> dict:
-    """校验生成的 SQL 是否合法。"""
-    logger.info('节点 validate_sql 执行')
+# 节点：校验SQL
+def validate_sql(state: DataAgentState, runtime: Runtime[DataAgentContext]):
+    # 输出给前端的数据（前后端约定好的格式）
     runtime.stream_writer({"stage": "校验SQL"})
 
-    # TODO: 实际校验 SQL 语法/语义
-    sql = state.get("sql", "")
-    sql_valid = bool(sql and sql.strip())
-
-    return {"sql_valid": sql_valid}
+    # 更新状态数据
+    # 校验成功error为None，校验失败为错误信息
+    return {"error": None} # 走执行SQL流程
+    # return {"error": "has error"} # 走校正SQL流程

@@ -1,18 +1,13 @@
-"""生成 SQL 节点。"""
-
 from langgraph.runtime import Runtime
 
-from app.agent.context import Context
-from app.agent.state import State
-from app.core.log import logger
+from app.agent.context import DataAgentContext
+from app.agent.state import DataAgentState
 
 
-def generate_sql(state: State, runtime: Runtime[Context]) -> dict:
-    """基于查询与上下文生成 SQL。"""
-    logger.info('节点 generate_sql 执行')
+# 节点：生成SQL
+def generate_sql(state: DataAgentState, runtime: Runtime[DataAgentContext]):
+    # 输出给前端的数据（前后端约定好的格式）
     runtime.stream_writer({"stage": "生成SQL"})
 
-    # TODO: 使用 LLM 基于 state['context'] 生成 SQL
-    sql: str = ""
-
-    return {"sql": sql}
+    # 更新状态数据
+    return {}
