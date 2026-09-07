@@ -1,22 +1,39 @@
-"""定义 langgraph 状态。"""
-
 from typing import TypedDict
 
+from app.models.es.value_info_es import ValueInfoEs
+from app.models.qdrant.column_info_qdrant import ColumnInfoQdrant
+from app.models.qdrant.metric_info_qdrant import MetricInfoQdrant
 
-class State(TypedDict, total=False):
-    """LangGraph 状态：在各节点间流转的可变数据。
 
-    节点通过返回值更新状态，langgraph 内部会自动合并。
-    """
-    query: str              # 用户输入的自然语言查询
-    keywords: list[str]     # extract_keyword 抽取出的关键词
-    recalled_columns: list  # recall_column 召回的字段信息
-    recalled_metrics: list  # recall_metric 召回的指标信息
-    recalled_values: list   # recall_value 召回的字段取值信息
-    recall_result: dict     # merge_recall 合并后的召回结果
-    filtered_tables: list   # filter_table 过滤后的表信息
-    filtered_metrics: list  # filter_metric 过滤后的指标信息
-    context: str            # add_context 组装后的上下文
-    sql: str                # generate_sql 生成的 SQL
-    sql_valid: bool         # validate_sql 校验结果
-    sql_result: str         # execute_sql 执行结果
+class ColumnInfoState(TypedDict):
+    name: str
+    type: str
+    role: str
+    examples: list
+    description: str
+    alias: list
+
+class TableInfoState(TypedDict):
+    name: str
+    role: str
+    description: str
+    columns: list[ColumnInfoState]
+
+class MetricInfoState(TypedDict):
+    name: str
+    description: str
+    relevant_columns: list
+    alias: list
+
+# 定义state数据模型（类型）
+class DataAgentState(TypedDict):
+    # agent的状态数据
+    query: str # 用户的提问
+    sql: str # 生成的SQL
+    error: str # 校验SQL的错误信息
+    keywords: list[str] # 关键词
+    recall_columns: list[ColumnInfoQdrant] # 召回的字段信息列表
+    recall_metrics: list[MetricInfoQdrant] # 召回的指标信息列表
+    recall_values: list[ValueInfoEs] # 召回的字段取值列表
+    table_infos: list[TableInfoState] # 合并后的表信息列表
+    metric_infos: list[MetricInfoState] # 合并后的指标信息列表

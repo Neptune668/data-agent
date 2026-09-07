@@ -30,3 +30,5 @@ class PromptLoader:
 
 # 全局提示词加载器实例，供各节点直接引用
 prompt_loader = PromptLoader()
+if __name__ == '__main__':
+    print(prompt_loader.load("correct_sql"))
