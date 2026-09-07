@@ -26,3 +26,6 @@ class MetaMySQLRepository:
     def save_column_metrics(self, column_metrics: list[ColumnMetricMySQL]):
         self.session.add_all(column_metrics)
 
+    async def get_column_info_by_id(self, column_id: str)->ColumnInfoMySQL:
+        return await self.session.get(ColumnInfoMySQL,column_id)
+

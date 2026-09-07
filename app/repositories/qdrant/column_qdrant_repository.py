@@ -53,3 +53,13 @@ class ColumnQdrantRepository:
                     for i in range(len(batch_ids))
                 ]
             )
+
+
+    async def search(self, vector: list[list[float]])->list[ColumnInfoQdrant]:
+        result = await self.client.query_points(
+            collection_name=self.collection_name,
+            query=vector,
+            score_threshold=0.6
+        )
+        # return [ponit.payload for ponit in result.points]
+        return [ColumnInfoQdrant(**ponit.payload) for ponit in result.points]

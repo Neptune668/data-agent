@@ -71,3 +71,17 @@ class ValueEsRepository:
             batch_operations = operations[i:i + batch_size]
             await client.bulk(operations=batch_operations)
 
+    async def search(self, keyword: str, threshold:float=0.6,limit:int=10)->list[ValueInfoEs]:
+        result = await self.client.search(
+            index=self.index_name,
+            query={  # 设置搜索条件
+                "match": {  # 设置要搜索的键和值
+                    "value": keyword
+                }
+            },
+            size=limit,
+            min_score=threshold
+        )
+
+        return [ValueInfoEs(**hit["_source"]) for hit in result["hits"]["hits"]]
+

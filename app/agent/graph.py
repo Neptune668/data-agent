@@ -78,7 +78,7 @@ graph_builder.add_edge('execute_sql', END)
 graph = graph_builder.compile()
 
 # 查看图结构
-# print( graph.get_graph().draw_mermaid() )
+print( graph.get_graph().draw_mermaid() )
 
 if __name__ == '__main__':
     async def test():
@@ -117,4 +117,4 @@ if __name__ == '__main__':
             await dw_mysql_client_manager.close()
             await meta_mysql_client_manager.close()
 
-    asyncio.run(test() )
+    asyncio.run(test())

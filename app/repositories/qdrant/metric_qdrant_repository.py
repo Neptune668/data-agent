@@ -47,10 +47,19 @@ class MetricQdrantRepository:
                 collection_name=self.collection_name,
                 points=[
                     models.PointStruct(
-                        id=batch_ids[i],  # 数据id
-                        vector=batch_vectors[i],  # 向量数据
-                        payload=batch_payloads[i]  # 向量的相关数据
+                        id=batch_ids[n],  # 数据id
+                        vector=batch_vectors[n],  # 向量数据
+                        payload=batch_payloads[n]  # 向量的相关数据
                     )
-                    for i in range(len(batch_ids))
+                    for n in range(len(batch_ids))
                 ]
             )
+
+    async def search(self, vector: list[list[float]]) -> list[MetricInfoQdrant]:
+        result = await self.client.query_points(
+            collection_name=self.collection_name,
+            query=vector,
+            score_threshold=0.6
+        )
+        # return [ponit.payload for ponit in result.points]
+        return [MetricInfoQdrant(**ponit.payload) for ponit in result.points]
