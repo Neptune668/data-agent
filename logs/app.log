@@ -18,3 +18,15 @@
 2026-09-06 21:03:53 | INFO     | request_id - 7545d4b8-831f-47e4-955e-04a1404dd8ad | app.services.meta_knowledge_service:build:83 - 为指标信息建立向量索引
 2026-09-06 21:03:53 | INFO     | request_id - dc46354d-8376-4b3f-b108-93f14d2f8f3f | app.services.meta_knowledge_service:build:85 - 构建业务 完成
 2026-09-06 21:03:53 | INFO     | request_id - b55f957c-8a79-475d-964d-6a99dd9bbcf3 | __main__:start_build:47 - 构建元数据知识库 完成
+2026-09-07 10:25:26 | INFO     | request_id - 960b4caa-34a6-41e7-99c0-f0b5dfea1f81 | app.agent.nodes.extract_keyword:extract_keyword:12 - 节点 extract_keyword 执行
+2026-09-07 10:25:26 | INFO     | request_id - 9805b035-f146-44e8-9185-79cbf7c5b2e0 | app.agent.nodes.recall_column:recall_column:12 - 节点 recall_column 执行
+2026-09-07 10:25:26 | INFO     | request_id - 4a14da38-fd68-49e3-bfd5-8bb26dbcc651 | app.agent.nodes.recall_metric:recall_metric:12 - 节点 recall_metric 执行
+2026-09-07 10:25:26 | INFO     | request_id - 3d6c2925-ac68-4642-bc66-3a1eadf2ed0e | app.agent.nodes.recall_value:recall_value:12 - 节点 recall_value 执行
+2026-09-07 10:25:26 | INFO     | request_id - cf369092-9282-4990-ad8a-d097ea53b29e | app.agent.nodes.merge_recall:merge_recall:12 - 节点 merge_recall 执行
+2026-09-07 10:25:26 | INFO     | request_id - 97e64ae9-41d1-408c-af0c-4d208e0541ce | app.agent.nodes.filter_metric:filter_metric:12 - 节点 filter_metric 执行
+2026-09-07 10:25:26 | INFO     | request_id - 76153267-fa7e-4f26-befc-657b08630728 | app.agent.nodes.filter_table:filter_table:12 - 节点 filter_table 执行
+2026-09-07 10:25:26 | INFO     | request_id - 43224cc2-c14a-41d1-b02d-4fa2af41a4b7 | app.agent.nodes.add_context:add_context:12 - 节点 add_context 执行
+2026-09-07 10:25:26 | INFO     | request_id - 7b2992c3-f306-4328-a835-7cfccf2735a1 | app.agent.nodes.generate_sql:generate_sql:12 - 节点 generate_sql 执行
+2026-09-07 10:25:26 | INFO     | request_id - 8f10d74d-ef62-4193-9817-0e07d78dcdd7 | app.agent.nodes.validate_sql:validate_sql:12 - 节点 validate_sql 执行
+2026-09-07 10:25:26 | INFO     | request_id - 5e1bd9a8-eac3-423f-8b91-d6b8bbdbfda1 | app.agent.nodes.correct_sql:correct_sql:12 - 节点 correct_sql 执行
+2026-09-07 10:25:26 | INFO     | request_id - 3916eb80-34d4-4420-a4b6-242eec5d3d9d | app.agent.nodes.execute_sql:execute_sql:12 - 节点 execute_sql 执行
