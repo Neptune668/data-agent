@@ -18,3 +18,21 @@ class DWMySQLRepository:
         result = await self.session.execute(text(sql))
         return result.scalars().all()
 
+    async def get_db_info(self)->dict:
+        # 获取数据库版本号
+        result = await self.session.execute(text('select version()'))
+        version = result.scalar()
+
+        # 获取数据库名称（方言）
+        dialect = self.session.get_bind().dialect.name
+
+        return {"dialect": dialect, "version": version}
+
+    async def validate_sql(self, sql: str):
+        await self.session.execute(text(f'explain {sql}'))
+        # 如果抛出异常，说明SQL不合法
+
+    # 执行SQL
+    async def to_execute_sql(self, sql: str)->list[dict]:
+        result = await self.session.execute(text(sql))
+        return [dict(row) for row in result.mappings().all()]

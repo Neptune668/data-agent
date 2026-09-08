@@ -11,7 +11,7 @@ class EsClientManager:
         self.config = config
         self.client: AsyncElasticsearch | None = None
 
-    # 获取连接的urlz
+    # 获取连接的url
     def _get_url(self):
         return f'http://{self.config.host}:{self.config.port}'
 

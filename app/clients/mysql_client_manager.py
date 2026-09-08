@@ -32,7 +32,7 @@ class MysqlClientManager:
         self.session_factory = async_sessionmaker(
             self.engine,
             autoflush=True,  # 自动刷新数据，自动将未提交事务的修改数据同步到数据库暂存区，可以查询到最新的数据
-            autobegin=True,  # 自动开始事务，每次执行sql语句z前自动开始事务，并不会自动关闭事务
+            autobegin=True,  # 自动开始事务，每次执行sql语句前自动开始事务，并不会自动关闭事务
             expire_on_commit=False  # 提交事务后ORM对象不过期，还可以访问里面的数据
         )
 

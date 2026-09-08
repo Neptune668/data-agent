@@ -97,5 +97,5 @@ app_config: AppConfig = OmegaConf.to_object(OmegaConf.merge(AppConfig, _yaml_dat
 
 if __name__ == '__main__':
     print(app_config)
-    print(type(app_config))
+    # print(type(app_config))
     print(app_config.logging.file.level) # INFO
