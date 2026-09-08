@@ -1,11 +1,12 @@
 from langgraph.runtime import Runtime
 
 from app.agent.context import DataAgentContext
-from app.agent.state import DataAgentState, TableInfoState, MetricInfoState
+from app.agent.state import DataAgentState, TableInfoState, MetricInfoState, ColumnInfoState
 from app.core.log import logger
 from app.models.mysql.column_info_mysql import ColumnInfoMySQL
+from app.models.mysql.table_info_mysql import TableInfoMySQL
 from app.models.qdrant.column_info_qdrant import ColumnInfoQdrant
-
+from app.models.qdrant.metric_info_qdrant import MetricInfoQdrant
 
 
 def _convert_column_info_mysql_to_qdrant(column_info: ColumnInfoMySQL)->ColumnInfoQdrant:
@@ -21,6 +22,26 @@ def _convert_column_info_mysql_to_qdrant(column_info: ColumnInfoMySQL)->ColumnIn
     )
 
 # 节点：合并召回信息
+def _convert_column_info_qdrant_to_state(column: ColumnInfoQdrant)->ColumnInfoState:
+    return ColumnInfoState(
+        name=column["name"],
+        type=column["type"],
+        role=column["role"],
+        examples=column["examples"],
+        description=column["description"],
+        alias=column["alias"]
+    )
+
+
+def _convert_metric_info_qdrant_to_state(metric: MetricInfoQdrant)->MetricInfoState:
+    return MetricInfoState(
+        name=metric["name"],
+        description=metric["description"],
+        relevant_columns=metric["relevant_columns"],
+        alias=metric["alias"]
+    )
+
+
 async def merge_recall(state: DataAgentState, runtime: Runtime[DataAgentContext]):
     # 输出给前端的数据（前后端约定好的格式）
     runtime.stream_writer({"stage": "合并召回信息"})
@@ -74,11 +95,41 @@ async def merge_recall(state: DataAgentState, runtime: Runtime[DataAgentContext]
             table_column_dict[table_id] = []
         table_column_dict[table_id].append(column)
 
-    logger.info(f'table_column_dict：{table_column_dict}')
+    logger.info(f'table_column_dict 1：{table_column_dict}')
 
 
+    # # 补充：相关表的主外键字段信息
+    for table_id,column_list in table_column_dict.items():
+        # 去查询meta库当前表的主外键字段信息
+        key_column_infos: list[ColumnInfoMySQL] = await meta_mysql_repo.get_key_column_infos_by_table_id(table_id)
+        for key_column_info in key_column_infos:
+            # 将主外键的字段信息转成ColumnInfoQdrant对象
+            key_column_info_qdrant = _convert_column_info_mysql_to_qdrant(key_column_info)
+            if key_column_info.id not in column_infos_dict:
+                # 当前表的主外键字段的id如果不在column_infos_dict中
+                # 那么，肯定不在table_column_dict当中
+                # 因为，table_column_dict是根据column_infos_dict生成的
+                table_column_dict[table_id].append(key_column_info_qdrant)
 
-    # 补充：相关表的主外键字段
+        # 生成TableInfoState对象列表:
+        # 1.根据当前表的id查询meta库获取表的信息
+        table_info: TableInfoMySQL = await meta_mysql_repo.get_table_info_by_id(table_id)
+        # 2.创建ColumnInfoState对象列表
+        columns: list[ColumnInfoState] = [_convert_column_info_qdrant_to_state(column) for column in column_list]
+        # 3.TableInfoState对象
+        table_info_state: TableInfoState = TableInfoState(
+            name=table_info.name,
+            role=table_info.role,
+            description=table_info.description,
+            columns=columns
+        )
+        table_infos.append(table_info_state)
+
+
+    # 创建MetricInfoState对象列表:
+    metric_infos: list[MetricInfoState] = [_convert_metric_info_qdrant_to_state(metric) for metric in recall_metrics]
+
+    logger.info(f'合并召回信息：{table_infos}--{metric_infos}')
 
     # 更新状态数据
-    return {"table_infos": '', "metric_infos": ''}
+    return {"table_infos": table_infos, "metric_infos": metric_infos}

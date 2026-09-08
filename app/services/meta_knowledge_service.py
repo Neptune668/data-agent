@@ -276,7 +276,7 @@ class MetaKnowledgeService:
         # payload -> 包含metric_info中的所有信息的字典(MetricInfoQdrant类型)
 
         # 收集所有点point的信息的字典列表
-        # [{id:uuid,vector:'向量文本',payload:{}},{...}]
+        # [{id:uuid,text:'向量文本',payload:{...}},...]
         points: list[dict] = []
 
         for metric_info in metric_infos:

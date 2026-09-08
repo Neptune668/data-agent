@@ -35,18 +35,18 @@ graph_builder = StateGraph(
 )
 
 # 添加节点
-graph_builder.add_node('extract_keyword',extract_keyword)
-graph_builder.add_node('recall_column',recall_column)
-graph_builder.add_node('recall_metric',recall_metric)
-graph_builder.add_node('recall_value',recall_value)
-graph_builder.add_node('merge_recall',merge_recall)
-graph_builder.add_node('filter_table',filter_table)
-graph_builder.add_node('filter_metric',filter_metric)
-graph_builder.add_node('add_context',add_context)
-graph_builder.add_node('generate_sql',generate_sql)
-graph_builder.add_node('validate_sql',validate_sql)
-graph_builder.add_node('correct_sql',correct_sql)
-graph_builder.add_node('execute_sql',execute_sql)
+graph_builder.add_node('extract_keyword', extract_keyword)
+graph_builder.add_node('recall_column', recall_column)
+graph_builder.add_node('recall_metric', recall_metric)
+graph_builder.add_node('recall_value', recall_value)
+graph_builder.add_node('merge_recall', merge_recall)
+graph_builder.add_node('filter_table', filter_table)
+graph_builder.add_node('filter_metric', filter_metric)
+graph_builder.add_node('add_context', add_context)
+graph_builder.add_node('generate_sql', generate_sql)
+graph_builder.add_node('validate_sql', validate_sql)
+graph_builder.add_node('correct_sql', correct_sql)
+graph_builder.add_node('execute_sql', execute_sql)
 
 # 添加边
 graph_builder.add_edge(START, 'extract_keyword')
@@ -65,9 +65,9 @@ graph_builder.add_edge('generate_sql', 'validate_sql')
 
 # 添加条件边
 graph_builder.add_conditional_edges(
-    'validate_sql', # 根据这个节点的返回值做判断
-    lambda state: 'execute_sql' if state.get('error') is None else 'correct_sql', # 判断条件
-    {'execute_sql': 'execute_sql', 'correct_sql': 'correct_sql'} # 根据条件跳转的节点
+    'validate_sql',  # 根据这个节点的返回值做判断
+    lambda state: 'execute_sql' if state.get('error') is None else 'correct_sql',  # 判断条件
+    {'execute_sql': 'execute_sql', 'correct_sql': 'correct_sql'}  # 根据条件跳转的节点
 )
 
 # 添加边
@@ -78,7 +78,7 @@ graph_builder.add_edge('execute_sql', END)
 graph = graph_builder.compile()
 
 # 查看图结构
-# print(graph.get_graph().draw_mermaid())
+# print( graph.get_graph().draw_mermaid() )
 
 if __name__ == '__main__':
     async def test():
@@ -102,11 +102,11 @@ if __name__ == '__main__':
                 )
 
                 # 创建状态对象
-                # state = DataAgentState(query='统计3月销售总额最高的3个产品')
-                state = DataAgentState(query='统计华北地区3月销售总额')
+                state = DataAgentState(query='统计3月销售总额最高的3个产品')
+                # state = DataAgentState(query='统计华北地区3月销售总额')
 
                 # 异步流式执行图
-                async for chunk in graph.astream(input=state,context=context,stream_mode='custom'):
+                async for chunk in graph.astream(input=state, context=context, stream_mode='custom'):
                     print(chunk)
         except Exception as e:
             logger.info(f'构建失败：{str(e)}')
@@ -116,5 +116,6 @@ if __name__ == '__main__':
             await es_client_manager.close()
             await dw_mysql_client_manager.close()
             await meta_mysql_client_manager.close()
+
 
     asyncio.run(test())

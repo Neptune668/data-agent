@@ -25,6 +25,15 @@ class MetricInfoState(TypedDict):
     relevant_columns: list
     alias: list
 
+class DateInfoState(TypedDict):
+    date: str # 日期时间
+    weekday: str # 星期
+    quarter: str # 季度 Q1-Q4
+
+class DBInfoState(TypedDict):
+    dialect: str # 数据库名称
+    version: str # 数据库版本
+
 # 定义state数据模型（类型）
 class DataAgentState(TypedDict):
     # agent的状态数据
@@ -37,3 +46,5 @@ class DataAgentState(TypedDict):
     recall_values: list[ValueInfoEs] # 召回的字段取值列表
     table_infos: list[TableInfoState] # 合并后的表信息列表
     metric_infos: list[MetricInfoState] # 合并后的指标信息列表
+    date_info: DateInfoState # 日期信息
+    db_info: DBInfoState # 数据库信息

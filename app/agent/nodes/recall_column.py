@@ -27,8 +27,8 @@ async def recall_column(state: DataAgentState, runtime: Runtime[DataAgentContext
 
     # 提示词模板
     prompt = PromptTemplate(
-        template=load_prompt('extend_keywords_for_column_recall'),
-        input_variables=["query"]
+       template=load_prompt('extend_keywords_for_column_recall'),
+       input_variables=["query"]
     )
 
     # 输出解析器
@@ -42,7 +42,7 @@ async def recall_column(state: DataAgentState, runtime: Runtime[DataAgentContext
     logger.info(f'recall_column llm keywords: {result}')
 
     # 合并关键字
-    keywords = list(set(keywords + result))
+    keywords = list(set(keywords+result))
     logger.info(f'recall_column 合并关键字: {keywords}')
 
     # 保存所有召回字段信息的字典（去重）{column_id: ColumnInfoQdrant}
