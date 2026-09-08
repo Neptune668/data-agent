@@ -78,7 +78,7 @@ graph_builder.add_edge('execute_sql', END)
 graph = graph_builder.compile()
 
 # 查看图结构
-print( graph.get_graph().draw_mermaid() )
+# print(graph.get_graph().draw_mermaid())
 
 if __name__ == '__main__':
     async def test():
@@ -105,9 +105,9 @@ if __name__ == '__main__':
                 # state = DataAgentState(query='统计3月销售总额最高的3个产品')
                 state = DataAgentState(query='统计华北地区3月销售总额')
 
-            # 异步流式执行图
-            async for chunk in graph.astream(input=state,context=context,stream_mode='custom'):
-                print(chunk)
+                # 异步流式执行图
+                async for chunk in graph.astream(input=state,context=context,stream_mode='custom'):
+                    print(chunk)
         except Exception as e:
             logger.info(f'构建失败：{str(e)}')
             raise e

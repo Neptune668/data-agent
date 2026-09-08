@@ -61,5 +61,5 @@ class MetricQdrantRepository:
             query=vector,
             score_threshold=0.6
         )
-        # return [ponit.payload for ponit in result.points]
-        return [MetricInfoQdrant(**ponit.payload) for ponit in result.points]
+        # return [point.payload for point in result.points]
+        return [MetricInfoQdrant(**point.payload) for point in result.points]

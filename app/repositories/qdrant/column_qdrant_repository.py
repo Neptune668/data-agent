@@ -61,5 +61,5 @@ class ColumnQdrantRepository:
             query=vector,
             score_threshold=0.6
         )
-        # return [ponit.payload for ponit in result.points]
-        return [ColumnInfoQdrant(**ponit.payload) for ponit in result.points]
+        # return [point.payload for point in result.points]
+        return [ColumnInfoQdrant(**point.payload) for point in result.points]
