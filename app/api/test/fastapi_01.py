@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 import uvicorn
 
 from pydantic import BaseModel
@@ -7,7 +9,15 @@ from fastapi.responses import StreamingResponse
 from app.api.test.product_router import product_router
 from app.api.test.order_router import order_router
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print('服务启动时执行，做一次性的初始化工作')
+
+    yield
+
+    print('服务关闭前执行，做一次性的收尾工作')
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/api/user/{cid}")
