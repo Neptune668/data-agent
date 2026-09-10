@@ -1,8 +1,5 @@
-"""
-查询接口的数据模型（请求参数与响应结果）
+from pydantic import BaseModel
 
-职责：
-1. 定义查询接口的请求体结构
-2. 定义查询接口的响应体结构
-3. 提供字段校验与示例
-"""
+# 定义body参数的数据结构
+class QuerySchema(BaseModel):
+    query: str
